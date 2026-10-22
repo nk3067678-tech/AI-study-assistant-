@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Study Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 20px 8%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px 20px 30px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #666;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto 50px;
+            padding: 0 20px;
+        }
+
+        .input-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            background: #111827;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .answer-box {
+            background: white;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            min-height: 120px;
+        }
+
+        .answer-box h3 {
+            margin-bottom: 12px;
+        }
+
+        #answer {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🤖 AI Study Assistant</h1>
+        <p>Learn difficult topics in a simple way</p>
+    </header>
+
+    <section class="hero">
+        <h2>Ask Anything About Your Studies</h2>
+        <p>Enter a topic or question and get a simple explanation.</p>
+    </section>
+
+    <div class="container">
+
+        <div class="input-box">
+
+            <textarea id="question"
+                placeholder="Example: Explain Newton's Laws in simple language"></textarea>
+
+            <button onclick="askAI()">
+                Ask AI
+            </button>
+
+        </div>
+
+        <div class="answer-box">
+
+            <h3>AI Answer</h3>
+
+            <p id="answer">
+                Your answer will appear here.
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+
+async function askAI() {
+
+    const question = document.getElementById("question").value;
+    const answer = document.getElementById("answer");
+
+    if (!question.trim()) {
+        answer.innerText = "Please enter a question.";
+        return;
+    }
+
+    answer.innerText = "AI is processing your question...";
+
+    try {
+        const response = await fetch("http://localhost:3000/ask-ai", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                question: question
+            })
+        });
+
+        const data = await response.json();
+
+        answer.innerText = data.answer;
+
+    } catch (error) {
+        console.error(error);
+        answer.innerText = "Unable to connect to the AI server.";
+    }
+}
+
+ </script>
+
+</body>
+
+</html>
