@@ -156,7 +156,7 @@ async function askAI() {
     answer.innerText = "AI is processing your question...";
 
     try {
-        const response = await fetch("http://localhost:3000/ask-ai", {
+       const response = await fetch("https://ai-study-assistant-v20c.onrender.com/ask-ai", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
