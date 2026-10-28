@@ -115,6 +115,43 @@
         <p>Enter a topic or question and get a simple explanation.</p>
     </section>
 
+    <section class="hero">
+        <h2>Create Your Study Schedule</h2>
+        <p>Plan your studies and prepare for your exams.</p>
+    </section>
+
+    <div class="container">
+        <div class="input-box">
+            <h3>Study Schedule Form</h3>
+
+            <label for="subjects">Subjects</label>
+            <input id="subjects" type="text"
+                placeholder="e.g. Physics, Mathematics">
+
+            <label for="examDate">Exam Date</label>
+            <input id="examDate" type="date">
+
+            <label for="topics">Topics to Study</label>
+            <textarea id="topics"
+                placeholder="Enter the topics you need to study"></textarea>
+
+            <label for="studyHours">Daily Study Hours</label>
+            <input id="studyHours" type="number"
+                min="1" max="24" placeholder="e.g. 4">
+
+            <button type="button" onclick="generateSchedule()">
+                Generate Schedule
+            </button>
+
+            <div class="answer-box">
+                <h3>Your Study Timetable</h3>
+                <p id="scheduleResult">
+                    Your timetable will appear here.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
 
         <div class="input-box">
