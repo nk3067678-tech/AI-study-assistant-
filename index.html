@@ -213,6 +213,51 @@ async function askAI() {
     }
 }
 
+function generateSchedule() {
+    const subjects = document.getElementById("subjects").value.trim();
+    const examDate = document.getElementById("examDate").value;
+    const topics = document.getElementById("topics").value.trim();
+    const studyHours = document.getElementById("studyHours").value;
+    const result = document.getElementById("scheduleResult");
+
+    if (!subjects || !examDate || !topics || !studyHours) {
+        result.innerText = "Please fill in all fields.";
+        return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const exam = new Date(examDate + "T00:00:00");
+    const daysLeft = Math.ceil((exam - today) / (1000 * 60 * 60 * 24));
+
+    if (daysLeft < 0) {
+        result.innerText = "Please select a future exam date.";
+        return;
+    }
+
+    const topicList = topics.split(",").map(topic => topic.trim()).filter(Boolean);
+
+    if (topicList.length === 0) {
+        result.innerText = "Please enter at least one topic.";
+        return;
+    }
+
+    const hoursPerTopic = (Number(studyHours) / topicList.length).toFixed(1);
+
+    result.innerHTML = `
+        <p><strong>Subjects:</strong> ${subjects}</p>
+        <p><strong>Days until exam:</strong> ${daysLeft}</p>
+        <p><strong>Daily study time:</strong> ${studyHours} hours</p>
+        <h4>Your daily plan</h4>
+        <ul>
+            ${topicList.map((topic, index) =>
+                `<li>${topic.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")} — ${hoursPerTopic} hours</li>`
+            ).join("")}
+        </ul>
+        <p>Repeat this plan daily and revise all topics before your exam.</p>
+    `;
+}
+
  </script>
 
 </body>
